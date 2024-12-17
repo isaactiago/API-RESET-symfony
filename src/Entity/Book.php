@@ -11,16 +11,16 @@ class Book
     #[ORM\Id] //nao vai poder ser zerado 
     #[ORM\GeneratedValue] //para ser autoincriement
     #[ORM\Column] //pra indicar que é uma coluna na tabela 
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    private string $title;
 
     #[ORM\Column(length: 255)]
-    private ?string $isbn = null;
+    private string $isbn;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private \DateTimeImmutable $created_at;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
