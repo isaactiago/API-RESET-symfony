@@ -17,21 +17,16 @@ class DeleteBookController extends AbstractController
     {
     }
 
-    #[Route('books/update/{book}', methods:["DELETE"])]
+    #[Route('books/delete/{book}', methods:["DELETE"])]
     public function __invoke(
-        Request $request,
         int $book,
     ):JsonResponse
     {
         $book = $this->bookRepository->find($book);
-
         if(null === $book) $this->createNotFoundException();
-        
-
-        $this->bookRepository->add($book);
-      
+        $this->bookRepository->remove($book);
         return $this->json([
-            "message" => "book updated succefuly",
+            "message" => "book delete succefuly",
             "data" => $book
         ]);
     }
