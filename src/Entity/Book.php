@@ -4,26 +4,35 @@ namespace App\Entity;
 
 use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Nullable;
+use Symfony\Component\Validator\Constraints\Type;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
 {
-    #[ORM\Id] //nao vai poder ser zerado 
-    #[ORM\GeneratedValue] //para ser autoincriement
-    #[ORM\Column] //pra indicar que é uma coluna na tabela 
+    #[ORM\Id] 
+    #[ORM\GeneratedValue] 
+    #[ORM\Column] 
     private int $id;
-
-    #[ORM\Column(length: 255)]
-    private string $title;
-
-    #[ORM\Column(length: 255)]
-    private string $isbn;
 
     #[ORM\Column]
     private \DateTimeImmutable $created_at;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $updated_at = null;
+
+    public function __construct(
+        #[ORM\Column(length: 255)]
+        private string $title,
+
+        #[ORM\Column(length: 255)]
+        private string $isbn,
+    )
+    {
+        $this->title = $title;
+        $this->isbn = $isbn;
+        $this->created_at = new \DateTimeImmutable("now",new \DateTimeZone("America/Sao_Paulo"));
+    }
 
     public function getId(): ?int
     {
